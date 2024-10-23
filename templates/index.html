@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Yield Prediction</title>
+    <style>
+        /* Set background image for the body */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('/static/images/crop.jpg'); /* Replace with your image URL */
+            background-size: cover; /* Make the background image cover the entire screen */
+            background-position: center; /* Center the background image */
+            background-repeat: no-repeat; /* Avoid image repetition */
+        }
+
+        /* Style the container for the form */
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 60%; /* Adjust width to reduce the form size */
+            max-width: 800px;
+        }
+
+        /* Style the form grid */
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2 columns layout */
+            gap: 15px;
+            align-items: center;
+        }
+
+        /* Full-width inputs for each grid cell */
+        input[type="number"], input[type="text"] {
+            padding: 10px;
+            width: 90%; /* Reduce input field width */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            grid-column: 1 / span 2; /* Span both columns */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        input[type="button"] {
+            padding: 10px 20px;
+            background-color: #918383; /* Background for clear button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            grid-column: 1 / span 2; /* Span both columns */
+            margin-top: 10px; /* Add some space above the button */
+        }
+
+        input[type="button"]:hover {
+            background-color: #d0d0d0; /* Darker gray on hover */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            grid-column: 1 / span 2; /* Span both columns for title */
+        }
+
+        /* Center the prediction text */
+        h2 {
+            grid-column: 1 / span 2;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Crop Yield Prediction</h1>
+        <form action="/predict" method="POST">
+            <label for="Area">Area:</label>
+            <input type="text" name="Area" required>
+
+            <label for="Item">Item:</label>
+            <input type="text" name="Item" required>
+
+            <label for="Year">Year:</label>
+            <input type="number" name="Year" required>
+
+            <label for="pesticides_tonnes">Pesticides (tonnes):</label>
+            <input type="number" name="pesticides_tonnes" required step="any">
+
+            <label for="avg_temp">Average Temperature (°C):</label>
+            <input type="number" name="avg_temp" required step="any">
+
+            <label for="average_rain_fall_mm_per_year">Average Rainfall (mm):</label>
+            <input type="number" name="average_rain_fall_mm_per_year" required step="any">
+
+            <input type="submit" value="Predict">
+            <input type="button" value="Clear Prediction" onclick="clearPrediction()">
+        </form>
+
+        {% if prediction %}
+        <h2 id="predictionText">Predicted Yield: {{ prediction }} hg/ha</h2>
+        {% endif %}
+    </div>
+
+    <script>
+        function clearPrediction() {
+            // Clear the prediction display
+            document.getElementById('predictionText').innerText = '';
+        }
+    </script>
+</body>
+</html>
